@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function vmRequests()
+    {
+        return $this->hasMany(VmRequest::class);
+    }
 }

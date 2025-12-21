@@ -74,6 +74,52 @@ body {
     margin-bottom: 20px;
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
   color: white;
+}
+
+textarea {
+    width: 400px;
+    height: 100px;
+}
+
+.text {
+    color: aqua;
+    font-weight: bold;
+}
+
+.list-title {
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.header,
+.info-text,
+.danger-link {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    margin: 15px 0;
+    text-transform: capitalize;
+}
+
+.h-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    padding: 10px 0;
+}
+
+.scroll-box {
+	max-height: 70px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+    display: flex;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    overflow-wrap: anywhere;
 }
