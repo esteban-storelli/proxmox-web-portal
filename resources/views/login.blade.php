@@ -15,5 +15,8 @@
                 </form>
             </div>
         </div>
+        @foreach ($errors->all() as $error)
+            <div class="error c-info-container">{{ $error }}</div>
+        @endforeach
     </body>
 </html>

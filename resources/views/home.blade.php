@@ -5,6 +5,10 @@
         <title>Home Page</title>
     </head>
     <body>
+        <form action="/logout" method="post">
+            @csrf
+            <input type="submit" class="button-link top-left" value="Logout">
+        </form>
         <div class="c-info-container">
             <h2 class="list-title">Request the Creation of a New LXC</h1>
             <div class="v-info-container">
@@ -21,6 +25,9 @@
                 </form>
             </div>
         </div>
+        @foreach ($errors->all() as $error)
+            <div class="error c-info-container">{{ $error }}</div>
+        @endforeach
         <div class="c-info-container">
 	        <h2 class="list-title">My LXC Requests</h2>
             <div class="v-info-container">
@@ -47,13 +54,14 @@
                                 <td class="cell-text">
                                     {{ $lxcRequest['status'] }}
                                 </td>
-                                <td class="cell-text">
+                                <td>
                                     <form
                                         action="/create-lxc/{{ $lxcRequest['id'] }}"
                                         method="post"
+                                        class="form"
                                         onsubmit="return confirm('Are you sure? This will create the LXC.')">
                                         @csrf
-                                        <input type="submit" class="danger-button" value="Create">
+                                        <input type="submit" class="danger-button cell-text" value="Create">
                                     </form>
                                 </td>
                             </tr>

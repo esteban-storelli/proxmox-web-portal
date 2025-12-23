@@ -21,6 +21,8 @@ Route::get('/login', function () {
 
 Route::post('/login', [UserController::class, 'login']);
 
+Route::post('/logout', [UserController::class, 'logout']);
+
 Route::post('/request-lxc', [LxcController::class, 'requestLxc']);
 
 Route::post('/approve-request/{id}', [LxcController::class, 'approveRequest']);

@@ -15,7 +15,7 @@ class LxcController extends Controller
         'silver' => ['cores' => 1, 'memory' => 1024, 'disk' => 8],
         'gold'   => ['cores' => 2, 'memory' => 2048, 'disk' => 16],
     ];
-
+    
     public function requestLxc(Request $request) {
             $incomingFields = $request->validate([
             'machine_power' => 'required|string|in:bronze,silver,gold',
@@ -91,7 +91,7 @@ class LxcController extends Controller
             return view('lxc_creation_success', ['vmid' => $vmid, 'hostname' => $hostname, 'password' => $password]);
         }
         else {
-            return redirect('/');
+            return redirect('/')->withErrors(['lxcRequest.approved' => 'LXC request must be approved.']);
         }
     }
 }

@@ -5,6 +5,10 @@
         <title>Home Page</title>
     </head>
     <body>
+        <form action="/logout" method="post">
+            @csrf
+            <input type="submit" class="button-link top-left" value="Logout">
+        </form>
         <div class="c-info-container">
             <h2 class="list-title">Pending LXC Requests</h2>
             <div class="v-info-container">
@@ -13,6 +17,7 @@
                         <tr>
                             <th>Machine Power</th>
                             <th>Details</th>
+                            <th>Requester</th>
                             <th>Approve</th>
                             <th>Deny</th>
                         </tr>
@@ -22,10 +27,14 @@
                             @if ($lxcRequest->status === 'pending')
                                 <tr>
                                     <td class="cell-text">{{ $lxcRequest['machine_power'] }}</td>
-
                                     <td>
                                         <div class="scroll-box">
                                             {{ $lxcRequest['details'] }}
+                                        </div>
+                                    </td>
+                                     <td>
+                                        <div class="cell-text">
+                                            {{ $lxcRequest->user->name }}
                                         </div>
                                     </td>
                                     <td>
@@ -35,7 +44,7 @@
                                             class="form"
                                             onsubmit="return confirm('Are you sure? This will allow the machine creation.')">
                                             @csrf
-                                            <input type="submit" class="danger-button" value="Approve">
+                                            <input type="submit" class="danger-button cell-text" value="Approve">
                                         </form>
                                     </td>
                                     <td>
@@ -45,7 +54,7 @@
                                             class="form"
                                             onsubmit="return confirm('Are you sure? This will prevent the machine creation.')">
                                             @csrf
-                                            <input type="submit" class="danger-button" value="Deny">
+                                            <input type="submit" class="danger-button cell-text" value="Deny">
                                         </form>
                                     </td>
                                 </tr>

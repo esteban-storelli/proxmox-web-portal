@@ -197,3 +197,13 @@ textarea {
 .table th:nth-child(2) {
 	width: 45%;
 }
+
+.top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.error {
+	color: #dc2626;;
+}
