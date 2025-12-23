@@ -1,59 +1,42 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Come Usare
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+! La password dei nodi del cluster è nella loro descrizione di VirtualBox !
 
-## About Laravel
+### DB
+Serva che il DB sia configurato in .env
+1. Copiare .env.example e rinominarlo .env
+2. Configuare le impostazioni sul database (commentate di default)
+```
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
+3. ``` php artisan migrate ```
+4. ``` php artisan db:seed --class=UserSeeder ```
+### API
+Per far funzionare l'API di Proxmox serve che sia configurato un token, sia in .env e sia nel Datacenter.
+Il modo migliore sarebbe configurare un utente con i privilegi minimi (tramite i ruoli), ma nei miei tentativi non sembrava funzionare, probabilmente mi mancavano alcuni permessi.
+La soluzione che ho utilizzato è questa (non adatta a production):
+1. Datacenter > Permissions > API Tokens
+2. Aggiungere un nuovo token e utilizzare root@pam, nome qualsiasi
+3. Privilege separation: "No" (non mi ricordo se fa differenza ma so che sicuramente funziona con No)
+4. Verrà generato un token
+5. Nel .env ho inserito in fondo alcuni campi da riempire
+6. Va inserito il token con formato user@pam!token_name=token
+7. Per far funzionare l'API serve inserire anche nome del nodo es. "px1", questo sarà dove verranno creati i LXC
+8. Serve anche l'IP del nodo su cui verrà chiamata l'API, può essere lo stesso o diverso dal nodo del punto precedente es. "192.168.56.15"
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Dopo queste configurazioni il sito dovrebbe funzionare.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Funzionamento
+Gli utenti sono stati inseriti dal Seeder chiamato nella configurazione del DB
+user@user.com password: user
+admin@admin.com password: admin
+1. Creare una richiesta dalla pagina dell'utente con la potenza della macchina desiderata
+2. Accettare la richiesta dalla pagina dell'admin
+3. Tornando alla pagina dell'utente si può creare un LXC (solo se la richiesta è stata accettata)
+4. L'LXC verrà creato nel nodo configurato in .env
+5. Verranno fornite le credenziali tramite web
