@@ -2,7 +2,7 @@
 <html>
     <head>
         @include('partials.head')
-        <title>Login Page</title>
+        <title>Creation Successful</title>
     </head>
     <body>
         <div class="c-info-container">

@@ -1,6 +1,7 @@
 # Come Usare
 
 ! La password dei nodi del cluster è nella loro descrizione di VirtualBox !
+La password del container sul quale è hostato il sito sempre la stessa
 
 ### DB
 Serva che il DB sia configurato in .env

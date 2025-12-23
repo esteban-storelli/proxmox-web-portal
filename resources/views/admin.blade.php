@@ -2,7 +2,7 @@
 <html>
     <head>
         @include('partials.head')
-        <title>Home Page</title>
+        <title>Admin Page</title>
     </head>
     <body>
         <form action="/logout" method="post">
