@@ -2,36 +2,57 @@
 <html>
     <head>
         @include('partials.head')
-        <title>Admin Page</title>
+        <title>Home Page</title>
     </head>
     <body>
         <div class="c-info-container">
-            <h2 class="list-title">Pending VM Requests</h2>
-            <div class="h-info-container">
-                <h2 class="header">Machine Power</h2>
-                <h2 class="header">Details</h2>
-                <h2 class="header">Approve</h2>
-                <h2 class="header">Deny</h2>
-            </div>
+            <h2 class="list-title">Pending LXC Requests</h2>
             <div class="v-info-container">
-                @foreach ($vmRequests as $vmRequest)
-                    <div class="h-info-container">
-                        <h3 class="info-text">{{ $vmRequest['machine_power'] }}</h3>
-                        <div class="scroll-box">{{ $vmRequest['details'] }}</div>
-                        <form action="/approve-request/{{ $vmRequest['id'] }}" method="post" class="info-text button-spacing">
-                            <input type="submit"
-                            class="danger-button"
-                            value="Approve"
-                            onclick="return confirm('Are you sure? This will allow the machine creation.'">
-                        </form>
-                        <form action="/deny-request/{{ $vmRequest['id'] }}" method="post" class="info-text button-spacing">
-                            <input type="submit"
-                            class="danger-button"
-                            value="Deny"
-                            onclick="return confirm('Are you sure? This will allow the machine creation.'">
-                        </form>
-                    </div>
-                @endforeach
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Machine Power</th>
+                            <th>Details</th>
+                            <th>Approve</th>
+                            <th>Deny</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($lxcRequests as $lxcRequest)
+                            @if ($lxcRequest->status === 'pending')
+                                <tr>
+                                    <td class="cell-text">{{ $lxcRequest['machine_power'] }}</td>
+
+                                    <td>
+                                        <div class="scroll-box">
+                                            {{ $lxcRequest['details'] }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form
+                                            action="/approve-request/{{ $lxcRequest['id'] }}"
+                                            method="post"
+                                            class="form"
+                                            onsubmit="return confirm('Are you sure? This will allow the machine creation.')">
+                                            @csrf
+                                            <input type="submit" class="danger-button" value="Approve">
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form
+                                            action="/deny-request/{{ $lxcRequest['id'] }}"
+                                            method="post"
+                                            class="form"
+                                            onsubmit="return confirm('Are you sure? This will prevent the machine creation.')">
+                                            @csrf
+                                            <input type="submit" class="danger-button" value="Deny">
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>

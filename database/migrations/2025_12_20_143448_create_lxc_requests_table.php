@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vm_requests', function (Blueprint $table) {
+        Schema::create('lxc_requests', function (Blueprint $table) {
             $table->id();
             $table->enum('machine_power', ['bronze', 'silver', 'gold']);
-            $table->text('details');
+            $table->text('details')->nullable();
             $table->integer('user_id')->constrained('users');
-            $table->enum('status', ['pending', 'approved', 'denied'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'denied', 'created'])->default('pending');
+            $table->text('denial_reason')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vm_requests');
+        Schema::dropIfExists('lxc_requests');
     }
 };

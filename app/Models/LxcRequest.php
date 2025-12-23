@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VmRequest extends Model
+class LxcRequest extends Model
 {
-    protected $table = 'vm_requests';
+    protected $table = 'lxc_requests';
     protected $fillable = [
         'machine_power',
         'details',

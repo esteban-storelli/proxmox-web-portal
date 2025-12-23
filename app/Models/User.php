@@ -46,8 +46,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function vmRequests()
+    public function lxcRequests()
     {
-        return $this->hasMany(VmRequest::class);
+        return $this->hasMany(LxcRequest::class);
     }
 }
