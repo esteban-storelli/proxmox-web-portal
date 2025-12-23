@@ -3,6 +3,9 @@
 ! La password dei nodi del cluster è nella loro descrizione di VirtualBox !
 La password del container sul quale è hostato il sito sempre la stessa
 
+Per vedere il sito hostato direttamente sul cluster basta avviare l'LXC web-portal e accedere al suo IP host only (192.168.56.x)
+Guardare il punto "Funzionamento" per dettagli su come usare il sito
+
 ### DB
 Serva che il DB sia configurato in .env
 1. Copiare .env.example e rinominarlo .env
